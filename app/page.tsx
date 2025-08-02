@@ -3,6 +3,7 @@ import AboutSection from "@/components/about-section"
 import ServiceSection from "@/components/service-section"
 import FaqAndContactSection from "@/components/faq-and-contact-section"
 import ScrollingTextBanner from "@/components/scrolling-text-banner"
+import TrustedClientsBanner from "@/components/trusted-clients-banner"
 
 export default function Page() {
   return (
@@ -11,6 +12,7 @@ export default function Page() {
       <AboutSection />
       <ServiceSection />
       <ScrollingTextBanner />
+      <TrustedClientsBanner />
       <FaqAndContactSection />
     </div>
   )
