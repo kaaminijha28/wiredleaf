@@ -1,11 +1,11 @@
-import type React from "react"
+import React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { FloatingNavbar } from "@/components/floating-navbar"
 import Footer from "@/components/footer"
-// Removed: import RippleEffect from "@/components/ui/ripple-effect"
+import { Toaster } from "sonner"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,11 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <FloatingNavbar />
-          {/* Removed: <RippleEffect /> */}
-          {children}
-          <Footer />
+        <ThemeProvider>
+          {/* Add key to force remount on theme change */}
+          <div key={Math.random()}>
+            <FloatingNavbar />
+            {children}
+            <Footer />
+            <Toaster richColors position="top-center" />
+          </div>
         </ThemeProvider>
       </body>
     </html>

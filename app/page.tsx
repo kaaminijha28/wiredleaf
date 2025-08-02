@@ -1,8 +1,8 @@
 import Hero1 from "../components/mvpblocks/hero-1"
 import AboutSection from "@/components/about-section"
 import ServiceSection from "@/components/service-section"
-import ContactSection from "@/components/contact-section"
-import { MouseTrailDemo } from "@/components/mouse-trail-demo" // Import MouseTrailDemo
+import FaqAndContactSection from "@/components/faq-and-contact-section"
+import ScrollingTextBanner from "@/components/scrolling-text-banner"
 
 export default function Page() {
   return (
@@ -10,8 +10,8 @@ export default function Page() {
       <Hero1 />
       <AboutSection />
       <ServiceSection />
-      <ContactSection />
-      <MouseTrailDemo /> {/* Add the MouseTrailDemo component here */}
+      <ScrollingTextBanner />
+      <FaqAndContactSection />
     </div>
   )
 }

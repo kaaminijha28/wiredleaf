@@ -6,7 +6,11 @@ import ContactForm from "./contact-form"
 export default function ContactSection() {
   return (
     <section id="contact" className="relative w-full py-12 md:py-24 lg:py-32 bg-neutral-950 overflow-hidden">
-      {/* Subtle background gradient matching hero-1.tsx vibe */}
+      {/* Left corner gradient */}
+      <div className="absolute top-0 left-0 z-[0] h-[300px] w-[300px] bg-gradient-to-br from-purple-500/20 to-blue-900/20 blur-3xl"></div>
+      {/* Right corner gradient */}
+      <div className="absolute bottom-0 right-0 z-[0] h-[300px] w-[300px] bg-gradient-to-tl from-purple-500/20 to-blue-900/20 blur-3xl"></div>
+      {/* Main background gradient */}
       <div className="absolute top-0 z-[0] h-full w-full bg-neutral-900/10 bg-[radial-gradient(ellipse_20%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
 
       {/* Crazy 3D Spline Effect in the background */}
