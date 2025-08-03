@@ -8,6 +8,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { toast } from "sonner";
+import { SparklesCore } from "@/components/ui/sparkles";
+import PageRippleEffect from "@/components/page-ripple-effect";
 
 export default function FaqAndContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,59 +55,82 @@ export default function FaqAndContactSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <div className="relative">
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-4">
-              Questions? Let's Talk
-            </h2>
-            <p className="text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto">
-              Find answers in our FAQ or reach out to discuss your project
-            </p>
+            {/* Add sparkles effect */}
+            <div className="relative">
+              <SparklesCore
+                background={false}
+                minSize={0.4}
+                maxSize={1}
+                amount={30}
+                color="rgba(124, 58, 237, 0.5)"
+                className="w-full h-full absolute top-0 pointer-events-none"
+              />
+              <div className="relative z-10">
+                <h2 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 mb-4">
+                  Questions? Let's Talk
+                </h2>
+                <p className="text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto">
+                  Find answers in our FAQ or reach out to discuss your project
+                </p>
+              </div>
+            </div>
+          </div>
+          {/* Add cursor ripple effect with pointer-events-none to allow interactions with elements below */}
+          <div className="pointer-events-none">
+            <PageRippleEffect />
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-20">
           {/* FAQ Section - Left Side */}
-          <div className="p-8 bg-neutral-900 rounded-lg">
-            <div className="relative">
+          <div className="p-8 bg-neutral-900 rounded-lg relative overflow-hidden group transform transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-2xl hover:shadow-purple-500/20">
+            {/* Corner lightning effects */}
+            <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-purple-600 to-blue-500 opacity-20 blur-xl group-hover:opacity-40 group-hover:scale-110 transition-all duration-300"></div>
+            <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-blue-500 to-purple-600 opacity-20 blur-xl group-hover:opacity-40 group-hover:scale-110 transition-all duration-300"></div>
+            {/* 3D lighting effect */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-purple-500/10 to-transparent"></div>
+            
+            <div className="relative z-30">
               <h3 className="text-2xl font-bold mb-8 text-white">
                 Frequently Asked Questions
               </h3>
             </div>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible className="w-full relative z-30">
               <AccordionItem value="faq-1" className="border-neutral-800">
-                <AccordionTrigger className="text-neutral-100 hover:text-neutral-200 transition-colors">
+                <AccordionTrigger className="text-neutral-100 hover:text-neutral-200 transition-colors relative w-full text-left flex items-center justify-between px-4 py-2">
                   What services do you offer?
                 </AccordionTrigger>
-                <AccordionContent className="text-neutral-400">
+                <AccordionContent className="text-neutral-400 px-4 py-2">
                   We specialize in creating innovative digital solutions including custom web development,
                   mobile applications, UI/UX design, and cutting-edge technology integration.
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="faq-2" className="border-neutral-800">
-                <AccordionTrigger className="text-neutral-100 hover:text-neutral-200 transition-colors">
+                <AccordionTrigger className="text-neutral-100 hover:text-neutral-200 transition-colors relative w-full text-left flex items-center justify-between px-4 py-2">
                   How long does a typical project take?
                 </AccordionTrigger>
-                <AccordionContent className="text-neutral-400">
+                <AccordionContent className="text-neutral-400 px-4 py-2">
                   Our agile development process typically spans 4-12 weeks depending on project
                   scope. We provide detailed timelines during initial consultation.
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="faq-3" className="border-neutral-800">
-                <AccordionTrigger className="text-neutral-100 hover:text-neutral-200 transition-colors">
+                <AccordionTrigger className="text-neutral-100 hover:text-neutral-200 transition-colors relative w-full text-left flex items-center justify-between px-4 py-2">
                   What is your pricing structure?
                 </AccordionTrigger>
-                <AccordionContent className="text-neutral-400">
+                <AccordionContent className="text-neutral-400 px-4 py-2">
                   We offer transparent, value-based pricing tailored to your needs.
                   Each solution is customized to provide the best return on investment.
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="faq-4" className="border-neutral-800">
-                <AccordionTrigger className="text-neutral-100 hover:text-neutral-200 transition-colors">
+                <AccordionTrigger className="text-neutral-100 hover:text-neutral-200 transition-colors relative w-full text-left flex items-center justify-between px-4 py-2">
                   Do you provide ongoing support?
                 </AccordionTrigger>
-                <AccordionContent className="text-neutral-400">
+                <AccordionContent className="text-neutral-400 px-4 py-2">
                   Yes, we provide comprehensive post-launch support and maintenance
                   packages to ensure your solution evolves with your needs.
                 </AccordionContent>
@@ -114,7 +139,13 @@ export default function FaqAndContactSection() {
           </div>
 
           {/* Contact Form - Right Side */}
-          <div className="p-8 bg-neutral-900 rounded-lg">
+          <div className="p-8 bg-neutral-900 rounded-lg relative overflow-hidden group transform transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/20">
+            {/* Corner lightning effects */}
+            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-600 to-blue-500 opacity-20 blur-xl group-hover:opacity-40 group-hover:scale-110 transition-all duration-300"></div>
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-blue-500 to-purple-600 opacity-20 blur-xl group-hover:opacity-40 group-hover:scale-110 transition-all duration-300"></div>
+            {/* 3D lighting effect */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-bl from-blue-500/10 to-transparent"></div>
+            
             <div className="relative">
               <h3 className="text-2xl font-bold mb-8 text-white">
                 Get in Touch

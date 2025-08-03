@@ -4,6 +4,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
+
 :root {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;

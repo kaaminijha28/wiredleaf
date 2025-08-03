@@ -22,17 +22,40 @@ const config = {
       animation: {
         'scroll-left': 'scroll-left 40s linear infinite',
         'scroll-right': 'scroll-right 40s linear infinite',
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "ripple": "ripple 0.5s ease-out forwards",
+        "grid": "animate-grid 60s linear infinite",
       },
-      keyframes: theme => ({
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
+      keyframes: {
         'scroll-left': {
           '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' }
+          '100%': { transform: 'translateX(-100%)' }
         },
         'scroll-right': {
-          '0%': { transform: 'translateX(-50%)' },
+          '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(0)' }
-        }
-      }),
+        },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        ripple: {
+          from: { transform: "translate(-50%, -50%) scale(0)", opacity: "1" },
+          to: { transform: "translate(-50%, -50%) scale(4)", opacity: "0" },
+        },
+        "animate-grid": {
+          from: { transform: "rotateX(35deg) translateY(0)" },
+          to: { transform: "rotateX(35deg) translateY(-100%)" },
+        },
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -104,30 +127,6 @@ const config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        ripple: {
-          from: { transform: "translate(-50%, -50%) scale(0)", opacity: "1" },
-          to: { transform: "translate(-50%, -50%) scale(4)", opacity: "0" }, // Increased scale for bigger size
-        },
-        "animate-grid": {
-          from: { transform: "rotateX(35deg) translateY(0)" },
-          to: { transform: "rotateX(35deg) translateY(-100%)" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        ripple: "ripple 0.5s ease-out forwards", // Faster timing (0.5s)
-        grid: "animate-grid 60s linear infinite",
       },
     },
   },
