@@ -1,15 +1,11 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from 'react';
-
-type User = {
-  id: string;
-  email: string;
-  name?: string;
-} | null;
+import { supabase } from './supabase';
+import { User } from '@supabase/auth-helpers-nextjs';
 
 type AuthContextType = {
-  user: User;
+  user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -18,22 +14,35 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Check for existing session
     checkAuth();
+
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session) {
+          setUser(session.user);
+        } else {
+          setUser(null);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const checkAuth = async () => {
     try {
-      // Check for existing session token
-      const token = localStorage.getItem('auth-token');
-      if (token) {
-        // Validate token with your backend
-        // const user = await validateToken(token);
-        // setUser(user);
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        setUser(session.user);
       }
     } catch (error) {
       console.error('Auth check failed:', error);
@@ -45,10 +54,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true);
-      // Add your authentication logic here
-      // const response = await authenticate(email, password);
-      // setUser(response.user);
-      // localStorage.setItem('auth-token', response.token);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+      if (data.user) setUser(data.user);
     } catch (error) {
       console.error('Sign in failed:', error);
       throw error;
@@ -60,8 +71,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signOut = async () => {
     try {
       setLoading(true);
-      // Add your sign out logic here
-      localStorage.removeItem('auth-token');
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
       setUser(null);
     } catch (error) {
       console.error('Sign out failed:', error);

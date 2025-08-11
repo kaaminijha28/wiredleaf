@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { useRouter, usePathname } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 import {
   Form,
   FormControl,
@@ -29,6 +31,10 @@ const formSchema = z.object({
 
 export default function SignIn() {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = new URLSearchParams(window.location.search);
+  const redirectUrl = searchParams.get('redirectUrl') || '/';
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -41,13 +47,16 @@ export default function SignIn() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     try {
-      // Here you would integrate with your authentication API
-      console.log(values);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      // Handle successful authentication
-    } catch (error) {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      });
+
+      if (error) throw error;
+      router.push(redirectUrl); // Redirect to the saved URL or home
+    } catch (error: any) {
       console.error(error);
+      form.setError('root', { message: error.message });
     } finally {
       setLoading(false);
     }
@@ -81,7 +90,7 @@ export default function SignIn() {
                 <FormField
                   control={form.control}
                   name="email"
-                  render={({ field }) => (
+                  render={({ field, fieldState, formState }) => (
                     <FormItem>
                       <FormLabel className="text-neutral-200">Email</FormLabel>
                       <FormControl>
@@ -102,7 +111,7 @@ export default function SignIn() {
                 <FormField
                   control={form.control}
                   name="password"
-                  render={({ field }) => (
+                  render={({ field, fieldState, formState }) => (
                     <FormItem>
                       <FormLabel className="text-neutral-200">Password</FormLabel>
                       <FormControl>
